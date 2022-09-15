@@ -1,5 +1,6 @@
 package com.example.codehomework.service;
 
+import com.example.codehomework.model.Faculty;
 import com.example.codehomework.model.Student;
 import com.example.codehomework.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,15 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
 
-    public Collection<Student> StudentFilter(Integer age) {
+    public Collection<Student> studentFilter(Integer age) {
         return studentRepository.findByAge(age);
+    }
+
+    public Collection<Student> studentFilterByAge(Integer start, Integer end) {
+        return studentRepository.findAllByAgeBetween(start, end);
+    }
+
+    public Collection<Student> studentsByFaculty(Faculty faculty) {
+        return studentRepository.findAllStudentsByFaculty(faculty);
     }
 }

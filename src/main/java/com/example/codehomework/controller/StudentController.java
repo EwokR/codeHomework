@@ -1,5 +1,6 @@
 package com.example.codehomework.controller;
 
+import com.example.codehomework.model.Faculty;
 import com.example.codehomework.model.Student;
 import com.example.codehomework.service.StudentService;
 import org.springframework.http.ResponseEntity;
@@ -46,8 +47,22 @@ public class StudentController {
     @GetMapping
     public ResponseEntity<Collection<Student>> studentFilter(@RequestParam(required = false) int age) {
         if (age > 0) {
-            return ResponseEntity.ok(studentService.StudentFilter(age));
+            return ResponseEntity.ok(studentService.studentFilter(age));
         }
         return ResponseEntity.ok(Collections.emptyList());
+    }
+
+    @GetMapping
+    public ResponseEntity<Collection<Student>> studentFilterByAge(@RequestParam(required = false) int start,
+                                                                  @RequestParam(required = false) int end) {
+        if (start > 0 || end > 0) {
+            return ResponseEntity.ok(studentService.studentFilterByAge(start, end));
+        }
+        return ResponseEntity.ok(Collections.emptyList());
+    }
+
+    @GetMapping
+    public ResponseEntity<Collection<Student>> studentsByFaculty(@RequestBody Faculty faculty) {
+        return ResponseEntity.ok(studentService.studentsByFaculty(faculty));
     }
 }

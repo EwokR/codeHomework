@@ -15,7 +15,7 @@ public class Faculty {
 
     @JsonIgnore
     @OneToMany(mappedBy = "faculty")
-    Collection<Student> students;
+    private Collection<Student> students;
 
     public Faculty(Long id, String name, String colour) {
         this.id = id;

@@ -1,6 +1,7 @@
 package com.example.codehomework.controller;
 
 import com.example.codehomework.model.Faculty;
+import com.example.codehomework.model.Student;
 import com.example.codehomework.service.FacultyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class FacultyController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity <Faculty> getFaculty(@PathVariable Long id) {
+    public ResponseEntity<Faculty> getFaculty(@PathVariable Long id) {
         Faculty faculty = facultyService.getFacultyById(id);
         if (faculty == null) {
             return ResponseEntity.notFound().build();
@@ -39,7 +40,7 @@ public class FacultyController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity <?> deleteFaculty(@PathVariable Long id) {
+    public ResponseEntity<?> deleteFaculty(@PathVariable Long id) {
         facultyService.deleteFaculty(id);
         return ResponseEntity.ok().build();
     }
@@ -51,4 +52,18 @@ public class FacultyController {
         }
         return ResponseEntity.ok(Collections.emptyList());
     }
+
+    @GetMapping
+    public ResponseEntity<Collection<Faculty>> findAllFacultiesByStudent(@RequestBody Student student) {
+        return ResponseEntity.ok(facultyService.findAllFacultiesByStudent(student));
+    }
+
+    @GetMapping
+    public ResponseEntity<Collection<Faculty>> findAllByColourOrName(@RequestParam(required = false) String colourOrName) {
+        if (colourOrName != null && !colourOrName.isBlank()) {
+            return ResponseEntity.ok(facultyService.findAllByColourIgnoreCaseOrNameIgnoreCase(colourOrName, colourOrName));
+        }
+        return ResponseEntity.ok(Collections.emptyList());
+    }
+
 }
