@@ -2,6 +2,7 @@ package com.example.codehomework.service;
 
 import com.example.codehomework.model.Faculty;
 import com.example.codehomework.model.Student;
+import com.example.codehomework.repository.FacultyRepository;
 import com.example.codehomework.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 public class StudentService {
 
     private final StudentRepository studentRepository;
+
 
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -53,7 +55,7 @@ public class StudentService {
         return studentRepository.findAllByAgeBetween(start, end);
     }
 
-    public Collection<Student> studentsByFaculty(Faculty faculty) {
-        return studentRepository.findAllStudentsByFaculty(faculty);
+    public Faculty findAllFacultiesByStudent(int id) {
+        return studentRepository.getStudentsById(id).getFaculty();
     }
 }

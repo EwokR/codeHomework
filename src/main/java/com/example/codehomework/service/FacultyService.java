@@ -3,6 +3,7 @@ package com.example.codehomework.service;
 import com.example.codehomework.model.Faculty;
 import com.example.codehomework.model.Student;
 import com.example.codehomework.repository.FacultyRepository;
+import com.example.codehomework.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,7 +54,8 @@ public class FacultyService {
         return facultyRepository.findAllByColourIgnoreCaseOrNameIgnoreCase(colour, name);
     }
 
-    public Collection<Faculty> findAllFacultiesByStudent(Student student) {
-        return facultyRepository.findAllFacultiesByStudent(student);
+
+    public Collection<Student> studentsByFaculty(int id) {
+        return facultyRepository.getFacultyById(id).getStudents();
     }
 }

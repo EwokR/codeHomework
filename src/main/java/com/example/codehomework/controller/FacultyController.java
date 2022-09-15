@@ -53,9 +53,9 @@ public class FacultyController {
         return ResponseEntity.ok(Collections.emptyList());
     }
 
-    @GetMapping
-    public ResponseEntity<Collection<Faculty>> findAllFacultiesByStudent(@RequestBody Student student) {
-        return ResponseEntity.ok(facultyService.findAllFacultiesByStudent(student));
+    @GetMapping("/{id}/students")
+    public ResponseEntity<Collection<Student>> studentsByFaculty(@RequestParam(required = false) int id) {
+        return ResponseEntity.ok(facultyService.studentsByFaculty(id));
     }
 
     @GetMapping

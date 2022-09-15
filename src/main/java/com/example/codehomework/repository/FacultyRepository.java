@@ -10,9 +10,13 @@ import java.util.List;
 @Repository
 public interface FacultyRepository extends JpaRepository<Faculty,Long> {
 
+   Faculty getFacultyById(int id);
+
     List<Faculty> findByColourIgnoreCase(String colour);
 
     List<Faculty> findAllByColourIgnoreCaseOrNameIgnoreCase(String colour, String name);
 
-    List<Faculty> findAllFacultiesByStudent(Student student);
+    List<Faculty> findAllFacultiesByStudent(int id);
+
+    Faculty studentsByFaculty(int id);
 }

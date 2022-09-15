@@ -50,4 +50,8 @@ public class Faculty {
     public void setColour(String colour) {
         this.colour = colour;
     }
+
+    public Collection<Student> getStudents() {
+        return students;
+    }
 }
