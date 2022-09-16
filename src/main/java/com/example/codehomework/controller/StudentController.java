@@ -65,5 +65,5 @@ public class StudentController {
     public ResponseEntity<Faculty> findAllFacultiesByStudent(@RequestParam(required = false) int id) {
         return ResponseEntity.ok(studentService.findAllFacultiesByStudent(id));
     }
-    // hi
+
 }
