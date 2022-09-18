@@ -9,7 +9,7 @@ import java.util.Collection;
 public class Faculty {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idFaculty;
     private String name;
     private String colour;
 
@@ -17,8 +17,8 @@ public class Faculty {
     @OneToMany(mappedBy = "faculty")
     private Collection<Student> students;
 
-    public Faculty(Long id, String name, String colour) {
-        this.id = id;
+    public Faculty(Long idFaculty, String name, String colour) {
+        this.idFaculty = idFaculty;
         this.name = name;
         this.colour = colour;
     }
@@ -27,12 +27,12 @@ public class Faculty {
 
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdFaculty() {
+        return idFaculty;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdFaculty(Long idFaculty) {
+        this.idFaculty = idFaculty;
     }
 
     public String getName() {

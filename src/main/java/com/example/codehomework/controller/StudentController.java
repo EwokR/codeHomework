@@ -1,13 +1,25 @@
 package com.example.codehomework.controller;
 
+import com.example.codehomework.model.Avatar;
 import com.example.codehomework.model.Faculty;
 import com.example.codehomework.model.Student;
 import com.example.codehomework.service.StudentService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
+
 @RequestMapping("student")
 @RestController
 public class StudentController {
@@ -24,7 +36,7 @@ public class StudentController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity <Student>  getStudent(@PathVariable Long id) {
+    public ResponseEntity<Student> getStudent(@PathVariable Long id) {
         Student student = studentService.getStudentById(id);
         if (student == null) {
             return ResponseEntity.notFound().build();
@@ -33,13 +45,13 @@ public class StudentController {
     }
 
     @PutMapping()
-    public ResponseEntity <Student>  updateStudent(@RequestBody Student student) {
+    public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
         Student updateStudent = studentService.updateStudent(student);
         return ResponseEntity.ok(updateStudent);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity <?> deleteStudent(@PathVariable Long id) {
+    public ResponseEntity<?> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
     }
@@ -65,5 +77,4 @@ public class StudentController {
     public ResponseEntity<Faculty> findAllFacultiesByStudent(@RequestParam(required = false) int id) {
         return ResponseEntity.ok(studentService.findAllFacultiesByStudent(id));
     }
-
 }

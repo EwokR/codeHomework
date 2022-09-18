@@ -31,7 +31,7 @@ public class FacultyService {
     }
 
     public Faculty updateFaculty(Faculty faculty) {
-        Optional<Faculty> one = facultyRepository.findById(faculty.getId());
+        Optional<Faculty> one = facultyRepository.findById(faculty.getIdFaculty());
         if (one.isPresent()) {
             Faculty facultyFromDB = one.get();
             facultyFromDB.setColour(faculty.getColour());

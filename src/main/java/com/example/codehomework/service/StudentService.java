@@ -32,7 +32,7 @@ public class StudentService {
     }
 
     public Student updateStudent(Student student) {
-        Optional<Student> one = studentRepository.findById(student.getId());
+        Optional<Student> one = studentRepository.findById(student.getIdStudent());
         if (one.isPresent()) {
             Student studentFromMyDB = one.get();
             studentFromMyDB.setAge(student.getAge());

@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idStudent;
     private String name;
     private int age;
 
@@ -14,8 +14,8 @@ public class Student {
     @JoinColumn(referencedColumnName = "faculty_id")
     private Faculty faculty;
 
-    public Student(Long id, String name, int age) {
-        this.id= id;
+    public Student(Long idStudent, String name, int age) {
+        this.idStudent= idStudent;
         this.name = name;
         this.age = age;
 
@@ -25,12 +25,12 @@ public class Student {
 
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdStudent() {
+        return idStudent;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdStudent(Long idStudent) {
+        this.idStudent = idStudent;
     }
 
     public String getName() {
