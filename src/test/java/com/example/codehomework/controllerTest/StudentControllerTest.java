@@ -45,7 +45,7 @@ public class StudentControllerTest {
         student.setIdStudent(6L);
         HttpEntity<Student> entity = new HttpEntity<Student>(student);
 
-        ResponseEntity<Student> response = testRestTemplate.exchange("/student", HttpMethod.PUT, entity, Student.class,
+        ResponseEntity<Student> response = testRestTemplate.exchange("/student", HttpMethod.POST, entity, Student.class,
                 student.getIdStudent());
 
         assertThat(this.testRestTemplate.postForObject("http://localhost:" + port + "/student", student, String.class))
@@ -62,14 +62,17 @@ public class StudentControllerTest {
         student.setName("Magic-guy");
         student.setAge(200);
         student.setIdStudent(6L);
-        Student updateStudent = new Student();
-        updateStudent.setAge(20);
+        student.setAge(29);
         HttpEntity<Student> entity = new HttpEntity<Student>(student);
 
         ResponseEntity<Student> response = testRestTemplate.exchange("/student/", HttpMethod.PUT, entity, Student.class,
                 student.getIdStudent());
 
-        assertThat(this.testRestTemplate.put("http://localhost:" + port + "/student", student, String.class))
+        assertThat(response.getBody().getAge()).isNotEqualTo(200);
+        assertThat(response.getBody().getAge()).isEqualTo(29);
+        assertThat(response.getBody().getName()).isEqualTo(student.getName());
+        assertThat(response.getBody().getIdStudent()).isEqualTo(student.getIdStudent());
+
     }
 
     @Test
@@ -80,10 +83,13 @@ public class StudentControllerTest {
         student.setIdStudent(6L);
         HttpEntity<Student> entity = new HttpEntity<Student>(student);
 
-        ResponseEntity<Student> response = testRestTemplate.exchange("/student/{id}", HttpMethod.PUT, entity, Student.class,
+        ResponseEntity<Student> response = testRestTemplate.exchange("/student/{id}", HttpMethod.POST, entity, Student.class,
                 student.getIdStudent());
 
-        assertThat(this.testRestTemplate.delete("http://localhost:" + port + "/student", student, Student.class))
-                .isNull();
+        this.testRestTemplate.delete("http://localhost:" + port + "/student", student, Student.class);
+
+        assertThat(response.getBody().getIdStudent()).isNull();
+        assertThat(response.getBody().getAge()).isNull();
+        assertThat(response.getBody().getName()).isNull();
     }
 }
