@@ -14,7 +14,7 @@ public class Avatar {
     @Lob
     private byte[] data;
 
-    @OneToOne(mappedBy = "avatar")
+    @OneToOne
     private Student student;
 
     public Avatar(Long idAvatar, String filePath, Long fileSize, String mediaType) {

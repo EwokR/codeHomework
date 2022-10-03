@@ -28,7 +28,13 @@ public class StudentService {
     }
 
     public Student getStudentById(Long id) {
-        return studentRepository.getById(id);
+        Optional<Student> one = studentRepository.findById(id);
+        if (one.isPresent()) {
+            Student studentGet = one.get();
+            return studentGet;
+        } else {
+            return null;
+        }
     }
 
     public Student updateStudent(Student student) {
@@ -55,7 +61,7 @@ public class StudentService {
         return studentRepository.findAllByAgeBetween(start, end);
     }
 
-    public Faculty findAllFacultiesByStudent(int id) {
-        return studentRepository.getStudentsById(id).getFaculty();
+    public Faculty findAllFacultiesByStudent(Long idStudent) {
+        return studentRepository.getStudentsByIdStudent(idStudent).getFaculty();
     }
 }

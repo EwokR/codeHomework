@@ -56,7 +56,7 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping
+    @GetMapping(params = "age")
     public ResponseEntity<Collection<Student>> studentFilter(@RequestParam(required = false) int age) {
         if (age > 0) {
             return ResponseEntity.ok(studentService.studentFilter(age));
@@ -64,7 +64,7 @@ public class StudentController {
         return ResponseEntity.ok(Collections.emptyList());
     }
 
-    @GetMapping
+    @GetMapping(params = {"start", "end"})
     public ResponseEntity<Collection<Student>> studentFilterByAge(@RequestParam(required = false) int start,
                                                                   @RequestParam(required = false) int end) {
         if (start > 0 || end > 0) {
@@ -74,7 +74,7 @@ public class StudentController {
     }
 
     @GetMapping("/{id}/faculty")
-    public ResponseEntity<Faculty> findAllFacultiesByStudent(@RequestParam(required = false) int id) {
-        return ResponseEntity.ok(studentService.findAllFacultiesByStudent(id));
+    public ResponseEntity<Faculty> findAllFacultiesByStudent(@RequestParam(required = false) long idStudent) {
+        return ResponseEntity.ok(studentService.findAllFacultiesByStudent(idStudent));
     }
 }

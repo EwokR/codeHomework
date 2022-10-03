@@ -55,6 +55,6 @@ public class FacultyControllerTest {
 
         when(facultyRepository.save(ArgumentMatchers.any(Faculty.class))).thenReturn(faculty);
         when(facultyRepository.findById(eq(id))).thenReturn(Optional.of(faculty));
-        when(facultyRepository.findByColourIgnoreCase(eq(colour))).thenReturn(Collections.singleton(faculty));
+        when(facultyRepository.findByColourIgnoreCase(eq(colour))).thenReturn(Collections.singletonList(faculty));
     }
 }

@@ -11,7 +11,6 @@ public class Student {
     private int age;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "faculty_id")
     private Faculty faculty;
 
     public Student(Long idStudent, String name, int age) {

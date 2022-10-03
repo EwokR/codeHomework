@@ -56,6 +56,6 @@ public class FacultyService {
 
 
     public Collection<Student> studentsByFaculty(int id) {
-        return facultyRepository.getFacultyById(id).getStudents();
+        return facultyRepository.getFacultyByIdFaculty(id).getStudents();
     }
 }
