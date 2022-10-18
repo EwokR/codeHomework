@@ -1,7 +1,6 @@
 package com.example.codehomework.repository;
 
 import com.example.codehomework.model.Faculty;
-import com.example.codehomework.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +9,7 @@ import java.util.List;
 @Repository
 public interface FacultyRepository extends JpaRepository<Faculty,Long> {
 
-   Faculty getFacultyByIdFaculty(int id);
+   Faculty getFacultyByIdFaculty(long id);
 
     List<Faculty> findByColourIgnoreCase(String colour);
 

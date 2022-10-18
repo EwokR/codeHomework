@@ -85,10 +85,10 @@ public class StudentControllerTest {
         Student student = new Student();
         student.setName("Magic-guy");
         student.setAge(12);
-        student.setIdStudent(6L);
         HttpEntity<Student> entity = new HttpEntity<Student>(student);
 
         ResponseEntity<Student> response = testRestTemplate.postForEntity("/student", entity, Student.class);
+        student.setIdStudent(response.getBody().getIdStudent());
 
         assertThat(this.testRestTemplate.getForEntity("/student/{id}", Student.class, response.getBody().getIdStudent()).getStatusCode())
                 .isEqualTo(HttpStatus.OK);
