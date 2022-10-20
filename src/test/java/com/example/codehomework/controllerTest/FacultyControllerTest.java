@@ -3,11 +3,10 @@ package com.example.codehomework.controllerTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.codehomework.controller.FacultyController;
-import com.example.codehomework.model.Faculty;
+import com.example.codehomework.entity.Faculty;
 import com.example.codehomework.repository.FacultyRepository;
 import com.example.codehomework.service.FacultyService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
@@ -21,12 +20,10 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Optional;
 
-import static org.hamcrest.Matchers.any;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;

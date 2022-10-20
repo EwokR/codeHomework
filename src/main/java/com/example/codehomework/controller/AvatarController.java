@@ -1,6 +1,7 @@
 package com.example.codehomework.controller;
 
-import com.example.codehomework.model.Avatar;
+import com.example.codehomework.entity.Avatar;
+import com.example.codehomework.record.AvatarRecord;
 import com.example.codehomework.service.AvatarService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -10,11 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.Min;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 @RequestMapping("avatar")
 @RestController
@@ -59,5 +62,11 @@ public class AvatarController {
             response.setContentLength(avatar.getFileSize().intValue());
             is.transferTo(os);
         }
+    }
+
+    @GetMapping
+    public List<AvatarRecord> findByPagination(@RequestParam @Min(1) int page,
+                                               @RequestParam @Min(1) int size) {
+        return avatarService.findByPagination(page,size);
     }
 }

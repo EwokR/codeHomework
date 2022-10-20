@@ -1,4 +1,4 @@
-package com.example.codehomework.model;
+package com.example.codehomework.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
+@Table(name = "faculties")
 public class Faculty {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

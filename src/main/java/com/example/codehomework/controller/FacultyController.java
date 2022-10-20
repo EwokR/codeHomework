@@ -1,7 +1,7 @@
 package com.example.codehomework.controller;
 
-import com.example.codehomework.model.Faculty;
-import com.example.codehomework.model.Student;
+import com.example.codehomework.entity.Faculty;
+import com.example.codehomework.entity.Student;
 import com.example.codehomework.service.FacultyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 import java.util.Collections;
 
-@RequestMapping("faculty")
+@RequestMapping("faculties")
 @RestController
 public class FacultyController {
     private final FacultyService facultyService;

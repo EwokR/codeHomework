@@ -1,17 +1,12 @@
 package com.example.codehomework.service;
 
-import com.example.codehomework.model.Faculty;
-import com.example.codehomework.model.Student;
+import com.example.codehomework.entity.Faculty;
+import com.example.codehomework.entity.Student;
 import com.example.codehomework.repository.FacultyRepository;
-import com.example.codehomework.repository.StudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class FacultyService {

@@ -1,26 +1,20 @@
 package com.example.codehomework.controller;
 
-import com.example.codehomework.model.Avatar;
-import com.example.codehomework.model.Faculty;
-import com.example.codehomework.model.Student;
+import com.example.codehomework.entity.Faculty;
+import com.example.codehomework.entity.Student;
+import com.example.codehomework.record.StudentRecord;
 import com.example.codehomework.service.StudentService;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
-@RequestMapping("student")
+@RequestMapping("students")
 @RestController
 public class StudentController {
     private final StudentService studentService;
@@ -30,9 +24,9 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<Student> createStudent(@RequestBody Student student) {
-        Student createStudent = studentService.createStudent(student);
-        return ResponseEntity.ok(createStudent);
+    public ResponseEntity<StudentRecord> createStudent(@RequestBody StudentRecord studentRecord) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(studentService.createStudent(studentRecord));
     }
 
     @GetMapping("{id}")
@@ -45,9 +39,8 @@ public class StudentController {
     }
 
     @PutMapping()
-    public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
-        Student updateStudent = studentService.updateStudent(student);
-        return ResponseEntity.ok(updateStudent);
+    public StudentRecord updateStudent(@RequestBody StudentRecord studentRecord) {
+        return studentService.updateStudent(studentRecord);
     }
 
     @DeleteMapping("{id}")
@@ -78,4 +71,18 @@ public class StudentController {
         return ResponseEntity.ok(studentService.findAllFacultiesByStudent(idStudent));
     }
 
+    @GetMapping("/totalCount")
+    public int totalCountOfStudents() {
+        return studentService.totalCountOfStudent();
+    }
+
+    @GetMapping("/averageAge")
+    public double averageAgeOfStudents() {
+        return studentService.averageAgeOfStudents();
+    }
+
+    @GetMapping("/lastStudents")
+    public List<StudentRecord> lastStudents(@RequestParam @Min(1) @Max(5) int count) {
+        return studentService.lastStudents(count);
+    }
 }

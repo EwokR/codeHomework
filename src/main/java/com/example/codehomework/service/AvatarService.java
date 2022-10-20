@@ -1,10 +1,12 @@
 package com.example.codehomework.service;
 
-import com.example.codehomework.model.Avatar;
-import com.example.codehomework.model.Student;
+import com.example.codehomework.component.RecordComponent;
+import com.example.codehomework.entity.Avatar;
+import com.example.codehomework.entity.Student;
+import com.example.codehomework.record.AvatarRecord;
 import com.example.codehomework.repository.AvatarRepository;
-import org.hibernate.result.Output;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +17,8 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -27,10 +31,12 @@ public class AvatarService {
 
     private final AvatarRepository avatarRepository;
     private final StudentService studentService;
+    private final RecordComponent recordComponent;
 
-    public AvatarService(AvatarRepository avatarRepository, StudentService studentService) {
+    public AvatarService(AvatarRepository avatarRepository, StudentService studentService,RecordComponent recordComponent) {
         this.avatarRepository = avatarRepository;
         this.studentService = studentService;
+        this.recordComponent=recordComponent;
     }
 
     public void uploadAvatar(Long idStudent, MultipartFile file) throws IOException {
@@ -82,5 +88,11 @@ public class AvatarService {
 
     private String getExtension(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
+    }
+
+    public List<AvatarRecord> findByPagination(int page, int size) {
+        return avatarRepository.findAll(PageRequest.of(page, size)).get()
+                .map(recordComponent::toRecordAvatar)
+                .collect(Collectors.toList());
     }
 }

@@ -1,4 +1,4 @@
-package com.example.codehomework.model;
+package com.example.codehomework.entity;
 
 import javax.persistence.*;
 

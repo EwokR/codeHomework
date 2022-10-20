@@ -1,16 +1,16 @@
 package com.example.codehomework.service;
 
-import com.example.codehomework.model.Faculty;
-import com.example.codehomework.model.Student;
+import com.example.codehomework.component.RecordComponent;
+import com.example.codehomework.exception.FacultyNotFoundException;
+import com.example.codehomework.exception.StudentNotFoundException;
+import com.example.codehomework.entity.Faculty;
+import com.example.codehomework.entity.Student;
+import com.example.codehomework.record.StudentRecord;
 import com.example.codehomework.repository.FacultyRepository;
 import com.example.codehomework.repository.StudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,13 +18,25 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
 
+    private final RecordComponent recordComponent;
 
-    public StudentService(StudentRepository studentRepository) {
+    private final FacultyRepository facultyRepository;
+
+    public StudentService(StudentRepository studentRepository,
+                          FacultyRepository facultyRepository,
+                          RecordComponent recordComponent) {
         this.studentRepository = studentRepository;
+        this.facultyRepository = facultyRepository;
+        this.recordComponent = recordComponent;
     }
 
-    public Student createStudent(Student student) {
-        return studentRepository.save(student);
+    public StudentRecord createStudent(StudentRecord studentRecord) {
+        Student student = recordComponent.toEntityStudentRecord(studentRecord);
+        if (studentRecord.getFaculty() != null) {
+            Faculty faculty = facultyRepository.findById(studentRecord.getFaculty().getId()).orElseThrow(FacultyNotFoundException::new);
+            student.setFaculty(faculty);
+        }
+        return recordComponent.toRecordStudent(studentRepository.save(student));
     }
 
     public Student getStudentById(Long id) {
@@ -37,16 +49,12 @@ public class StudentService {
         }
     }
 
-    public Student updateStudent(Student student) {
-        Optional<Student> one = studentRepository.findById(student.getIdStudent());
-        if (one.isPresent()) {
-            Student studentFromMyDB = one.get();
-            studentFromMyDB.setAge(student.getAge());
-            studentFromMyDB.setName(student.getName());
-            return studentRepository.save(studentFromMyDB);
-        } else {
-            return null;
-        }
+    public StudentRecord updateStudent(StudentRecord studentRecord) {
+        Student oldStudent = studentRepository.findById(studentRecord.getId())
+                .orElseThrow(StudentNotFoundException::new);
+        oldStudent.setAge(studentRecord.getAge());
+        oldStudent.setName(studentRecord.getName());
+        return recordComponent.toRecordStudent(studentRepository.save(oldStudent));
     }
 
     public void deleteStudent(Long id) {
@@ -63,5 +71,19 @@ public class StudentService {
 
     public Faculty findAllFacultiesByStudent(Long idStudent) {
         return studentRepository.getStudentsByIdStudent(idStudent).getFaculty();
+    }
+
+    public int totalCountOfStudent() {
+        return studentRepository.totalCountOfStudents();
+    }
+
+    public double averageAgeOfStudents() {
+        return studentRepository.averageAgeOfStudents();
+    }
+
+    public List<StudentRecord> lastStudents(int count) {
+        return studentRepository.lastStudents(count).stream()
+                .map(recordComponent::toRecordStudent)
+                .collect(Collectors.toList());
     }
 }
