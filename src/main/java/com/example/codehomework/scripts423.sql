@@ -4,4 +4,4 @@ FROM students s
 
 SELECT s.name, s.age
 FROM students s
-INNER JOIN avatars a on s.id = a.student_idStudent
+INNER JOIN avatars a on s.id = a.student_idStudent;
