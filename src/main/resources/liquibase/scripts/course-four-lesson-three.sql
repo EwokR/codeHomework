@@ -4,6 +4,6 @@
 
 CREATE INDEX student_name_index on student (name);
 
-CREATE INDEX faculty_name_index on faculty (name);
+-- changeset AKorneev: 2
 
-CREATE INDEX faculty_colour_index on faculty (colour);
+CREATE INDEX faculty_name_and_colour_index on faculty (name, colour);
