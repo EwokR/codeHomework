@@ -1,6 +1,7 @@
 package com.example.codehomework.entity;
 
 import javax.persistence.*;
+import java.util.Arrays;
 
 @Entity
 public class Avatar {
@@ -70,5 +71,17 @@ public class Avatar {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    @Override
+    public String toString() {
+        return "Avatar{" +
+                "idAvatar=" + idAvatar +
+                ", filePath='" + filePath + '\'' +
+                ", fileSize=" + fileSize +
+                ", mediaType='" + mediaType + '\'' +
+                ", data=" + Arrays.toString(data) +
+                ", student=" + student +
+                '}';
     }
 }

@@ -20,4 +20,12 @@ public class AvatarRecord {
     public void setStudentRecord(StudentRecord studentRecord) {
         this.studentRecord = studentRecord;
     }
+
+    @Override
+    public String toString() {
+        return "AvatarRecord{" +
+                "id=" + id +
+                ", studentRecord=" + studentRecord +
+                '}';
+    }
 }

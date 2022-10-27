@@ -29,4 +29,13 @@ public class FacultyRecord {
     public void setColour(String colour) {
         this.colour = colour;
     }
+
+    @Override
+    public String toString() {
+        return "FacultyRecord{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", colour='" + colour + '\'' +
+                '}';
+    }
 }

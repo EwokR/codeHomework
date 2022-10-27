@@ -55,4 +55,14 @@ public class Faculty {
     public Collection<Student> getStudents() {
         return students;
     }
+
+    @Override
+    public String toString() {
+        return "Faculty{" +
+                "idFaculty=" + idFaculty +
+                ", name='" + name + '\'' +
+                ", colour='" + colour + '\'' +
+                ", students=" + students +
+                '}';
+    }
 }

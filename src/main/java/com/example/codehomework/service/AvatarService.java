@@ -5,6 +5,8 @@ import com.example.codehomework.entity.Avatar;
 import com.example.codehomework.entity.Student;
 import com.example.codehomework.record.AvatarRecord;
 import com.example.codehomework.repository.AvatarRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,8 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Transactional
 public class AvatarService {
 
+    Logger logger = LoggerFactory.getLogger(AvatarService.class);
+
     @Value("${students.avatar.dir.path}$")
     private String avatarDir;
 
@@ -40,6 +44,7 @@ public class AvatarService {
     }
 
     public void uploadAvatar(Long idStudent, MultipartFile file) throws IOException {
+        logger.info("Since i too afraid to brake something in Avatar chain. I will give only info. This upload avatar of student on server and makes connection between model Avatar & student. ");
         Student student = studentService.getStudentById(idStudent);
 
         Path filePath = Path.of(avatarDir, idStudent + "." + getExtension(file.getOriginalFilename()));
@@ -66,10 +71,12 @@ public class AvatarService {
     }
 
     public Avatar findAvatar(Long idStudent) {
+        logger.info("Simple find avatar by id");
         return avatarRepository.findByStudent_idStudent(idStudent).orElse(new Avatar());
     }
 
     public byte[] generateImagePreview(Path filePath) throws IOException {
+        logger.info("This generates preview of avatar.");
         try (InputStream is = Files.newInputStream(filePath);
              BufferedInputStream bis = new BufferedInputStream(is, 1024);
              ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
