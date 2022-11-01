@@ -14,11 +14,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.Spliterator;
+import java.util.stream.Stream;
 
 @Service
 public class StudentService {
 
-    Logger logger = LoggerFactory.getLogger(StudentService.class);
+    private final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     private final StudentRepository studentRepository;
 
@@ -104,4 +106,30 @@ public class StudentService {
                 .map(recordComponent::toRecordStudent)
                 .collect(Collectors.toList());
     }
+
+    public List<String> findAllStudentsWitchStartsOnChar(char ch) {
+        List<Student> sList = studentRepository.findAll();
+        String str = (ch + "").toUpperCase();
+        return sList.stream()
+                .map(Student::getName)
+                .map(String::toUpperCase)
+                .filter(s -> s.startsWith(str))
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+    public double findAverageAgeOfStudentsByStream() {
+        Student student = new Student();
+
+        return (double) studentRepository.findAll()
+                .stream()
+                .mapToDouble(Student::getAge)
+                .average().orElse(0);
+    }
+
+    public int numberFinder() {
+        int sum = Stream.iterate(1, a -> a +1) .parallel() .limit(1_000_000) .reduce(0, (a, b) -> a + b );
+        return sum;
+    }
+
 }

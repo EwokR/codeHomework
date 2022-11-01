@@ -28,7 +28,7 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Transactional
 public class AvatarService {
 
-    Logger logger = LoggerFactory.getLogger(AvatarService.class);
+    private final Logger logger = LoggerFactory.getLogger(AvatarService.class);
 
     @Value("${students.avatar.dir.path}$")
     private String avatarDir;
@@ -37,10 +37,10 @@ public class AvatarService {
     private final StudentService studentService;
     private final RecordComponent recordComponent;
 
-    public AvatarService(AvatarRepository avatarRepository, StudentService studentService,RecordComponent recordComponent) {
+    public AvatarService(AvatarRepository avatarRepository, StudentService studentService, RecordComponent recordComponent) {
         this.avatarRepository = avatarRepository;
         this.studentService = studentService;
-        this.recordComponent=recordComponent;
+        this.recordComponent = recordComponent;
     }
 
     public void uploadAvatar(Long idStudent, MultipartFile file) throws IOException {
@@ -85,7 +85,7 @@ public class AvatarService {
             int heights = image.getHeight() / (image.getWidth() / 100);
             BufferedImage preview = new BufferedImage(100, heights, image.getType());
             Graphics2D graphics = preview.createGraphics();
-            graphics.drawImage(image,0,0,100,heights,null);
+            graphics.drawImage(image, 0, 0, 100, heights, null);
             graphics.dispose();
 
             ImageIO.write(preview, getExtension(filePath.getFileName().toString()), baos);

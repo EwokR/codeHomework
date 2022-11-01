@@ -8,12 +8,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Optional;
 
 @Service
 public class FacultyService {
 
-    Logger logger = LoggerFactory.getLogger(FacultyService.class);
+    private final Logger logger = LoggerFactory.getLogger(FacultyService.class);
 
     private final FacultyRepository facultyRepository;
 
@@ -47,7 +48,7 @@ public class FacultyService {
 
     public void deleteFaculty(Long id) {
         logger.debug("Delete faculty by id: {}", id);
-         facultyRepository.deleteById(id);
+        facultyRepository.deleteById(id);
     }
 
     public Collection<Faculty> facultyFilter(String colour) {
@@ -64,5 +65,14 @@ public class FacultyService {
     public Collection<Student> studentsByFaculty(int id) {
         logger.info("Shows students on faculty");
         return facultyRepository.getFacultyByIdFaculty(id).getStudents();
+    }
+
+    public String longestFacultyName() {
+        Faculty faculty = new Faculty();
+
+        return (String) facultyRepository.findAll()
+                .stream()
+                .map(Faculty::getName)
+                .min(String::compareTo).get();
     }
 }

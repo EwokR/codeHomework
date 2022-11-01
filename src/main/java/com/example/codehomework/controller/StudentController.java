@@ -85,4 +85,19 @@ public class StudentController {
     public List<StudentRecord> lastStudents(@RequestParam @Min(1) @Max(5) int count) {
         return studentService.lastStudents(count);
     }
+
+    @GetMapping("/averageAge2")
+    public double findAverageAgeOfStudentsByStream() {
+        return studentService.findAverageAgeOfStudentsByStream();
+    }
+
+    @GetMapping("/namesWithChar")
+    public List<String> findAllStudentsWitchStartsOnChar(@RequestParam(required = false) char ch) {
+        return studentService.findAllStudentsWitchStartsOnChar(ch);
+    }
+
+    @GetMapping("/numberFinder")
+    public Integer numberFinder() {
+        return studentService.numberFinder();
+    }
 }
