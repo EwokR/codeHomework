@@ -119,8 +119,6 @@ public class StudentService {
     }
 
     public double findAverageAgeOfStudentsByStream() {
-        Student student = new Student();
-
         return (double) studentRepository.findAll()
                 .stream()
                 .mapToDouble(Student::getAge)

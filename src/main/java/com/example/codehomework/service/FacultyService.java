@@ -2,6 +2,7 @@ package com.example.codehomework.service;
 
 import com.example.codehomework.entity.Faculty;
 import com.example.codehomework.entity.Student;
+import com.example.codehomework.exception.FacultyNotFoundException;
 import com.example.codehomework.repository.FacultyRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -68,11 +70,17 @@ public class FacultyService {
     }
 
     public String longestFacultyName() {
-        Faculty faculty = new Faculty();
+        Comparator<Faculty> compareFacultiesByName = new Comparator<Faculty>() {
+            @Override
+            public int compare(Faculty o1, Faculty o2) {
+                return o1.getName().length() -o2.getName().length();
+            }
+        };
 
-        return (String) facultyRepository.findAll()
-                .stream()
-                .map(Faculty::getName)
-                .min(String::compareTo).get();
+        List<Faculty> lislF = facultyRepository.findAll();
+        return lislF.stream()
+                .max(compareFacultiesByName)
+                .orElseThrow(()-> new FacultyNotFoundException())
+                .getName();
     }
 }

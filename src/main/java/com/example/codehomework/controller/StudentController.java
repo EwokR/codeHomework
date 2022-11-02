@@ -92,7 +92,7 @@ public class StudentController {
     }
 
     @GetMapping("/namesWithChar")
-    public List<String> findAllStudentsWitchStartsOnChar(@RequestParam(required = false) char ch) {
+    public List<String> findAllStudentsWitchStartsOnChar(@RequestParam char ch) {
         return studentService.findAllStudentsWitchStartsOnChar(ch);
     }
 
