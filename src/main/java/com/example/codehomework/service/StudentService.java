@@ -28,6 +28,8 @@ public class StudentService {
 
     private final FacultyRepository facultyRepository;
 
+    private int count = 1;
+
     public StudentService(StudentRepository studentRepository,
                           FacultyRepository facultyRepository,
                           RecordComponent recordComponent) {
@@ -126,8 +128,27 @@ public class StudentService {
     }
 
     public int numberFinder() {
-        int sum = Stream.iterate(1, a -> a +1) .parallel() .limit(1_000_000) .reduce(0, (a, b) -> a + b );
+        int sum = Stream.iterate(1, a -> a + 1).parallel().limit(1_000_000).reduce(0, (a, b) -> a + b);
         return sum;
     }
 
+    public void namesOfStudentsInStreams() {
+        getStudentsForStream(4);
+
+        new Thread(() ->{
+            getStudentsForStream(6);
+            getStudentsForStream(2);
+        }).start();
+
+        new Thread(()->{
+            getStudentsForStream(1);
+            getStudentsForStream(5);
+        }).start();
+    }
+
+    public void getStudentsForStream(long id) {
+        Student student = studentRepository.getStudentsByIdStudent(id);
+        System.out.println(student.getName() + count);
+        count++;
+    }
 }
