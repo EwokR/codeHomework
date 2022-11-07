@@ -132,23 +132,47 @@ public class StudentService {
         return sum;
     }
 
-    public void namesOfStudentsInStreams() {
-        getStudentsForStream(4);
+    public String allStudentsToConsoleOutput() {
+        List<Student> sList = studentRepository.findAllSortedByIdStudent();
 
-        new Thread(() ->{
-            getStudentsForStream(6);
-            getStudentsForStream(2);
-        }).start();
+        new Thread(() -> studentConsoleOut(sList.get(2), sList.get(3))).start();
+        new Thread(() -> studentConsoleOut(sList.get(4), sList.get(5))).start();
 
-        new Thread(()->{
-            getStudentsForStream(1);
-            getStudentsForStream(5);
-        }).start();
+        studentConsoleOut(sList.get(0), sList.get(1));
+        studentConsoleOut(sList.get(6), sList.get(7));
+
+        return "Ok";
     }
 
-    public void getStudentsForStream(long id) {
-        Student student = studentRepository.getStudentsByIdStudent(id);
-        System.out.println(student.getName() + count);
-        count++;
+    public String allStudentsToConsoleSyncOutput() {
+        List<Student> sList = studentRepository.findAllSortedByIdStudent();
+
+        new Thread(() -> studentConsoleSyncOut(sList.get(2), sList.get(3))).start();
+        new Thread(() -> studentConsoleSyncOut(sList.get(4), sList.get(5))).start();
+
+        studentConsoleSyncOut(sList.get(0), sList.get(1));
+        studentConsoleSyncOut(sList.get(6), sList.get(7));
+
+        return "Ok";
+    }
+
+    private void studentConsoleOut(Student student1, Student student2) {
+        try {
+            System.out.println(student1);
+            System.out.println(student2);
+            Thread.sleep(1000);
+        } catch(InterruptedException e) {
+            System.out.println("Thread was interrupted");
+        }
+    }
+
+    private synchronized void studentConsoleSyncOut(Student student1, Student student2) {
+        try {
+            System.out.println(student1);
+            System.out.println(student2);
+            Thread.sleep(1000);
+        } catch(InterruptedException e) {
+            System.out.println("Thread was interrupted");
+        }
     }
 }

@@ -101,4 +101,13 @@ public class StudentController {
         return studentService.numberFinder();
     }
 
+    @GetMapping("/consoleout")
+    public String allStudentsToConsole() {
+        return studentService.allStudentsToConsoleOutput();
+    }
+
+    @GetMapping("/consoleoutsynchronized")
+    public String allStudentsToConsoleSyncOutput() {
+        return studentService.allStudentsToConsoleSyncOutput();
+    }
 }
